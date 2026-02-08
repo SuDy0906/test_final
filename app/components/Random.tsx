@@ -100,16 +100,16 @@ export default function ASCII2DText({
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       
-      const maxWidth = isMobile ? w * 0.6 : w * 0.9;
+      const maxWidth = isMobile ? w * 0.5 : w * 0.9;
 
       ctx.globalCompositeOperation = 'screen';
       
       ctx.fillStyle = '#2b4539'; 
-      wrapText(ctx, text, w / 2 - 1.25, h / 2, maxWidth, lineHeight);
+      wrapText(ctx, text, w / 2 - 1.2, h / 2, maxWidth, lineHeight);
       ctx.fillStyle = '#61dca3'; 
       wrapText(ctx, text, w / 2, h / 2, maxWidth, lineHeight);
       ctx.fillStyle = '#61b3dc'; 
-      wrapText(ctx, text, w / 2 + 1.25, h / 2, maxWidth, lineHeight);
+      wrapText(ctx, text, w / 2 + 1.2, h / 2, maxWidth, lineHeight);
       
       ctx.globalCompositeOperation = 'source-over';
 
