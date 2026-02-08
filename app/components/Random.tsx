@@ -85,25 +85,30 @@ export default function ASCII2DText({
 
       const w = canvas.width;
       const h = canvas.height;
-      // Access the pixel width from the ref safely
       const pixelWidth = pixelWidthRef.current; 
       ctx.clearRect(0, 0, w, h);
       
-      // --- 768PX BREAKPOINT LOGIC ---
+      // 1. Identify the Breakpoint
       const isMobile = pixelWidth < 768; 
       
-      const fontMultiplier = isMobile ? 0.35 : 0.2; 
+      // 2. Adjust Font Size for better fitting
+      // Desktop needs smaller relative font to fit "LET'S BUILD" in one line
+      const fontMultiplier = isMobile ? 0.35 : 0.15; 
       const responsiveFontSize = Math.min(w * fontMultiplier, textFontSize / 6); 
       
-      const lineHeight = responsiveFontSize * 1.1; 
+      const lineHeight = responsiveFontSize * 1.2; 
       ctx.font = `900 ${responsiveFontSize}px "IBM Plex Mono", monospace`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       
-      const maxWidth = isMobile ? w * 0.5 : w * 0.9;
+      // 3. FORCE LINE BREAK LOGIC
+      // On desktop: set maxWidth higher than the canvas so it NEVER wraps
+      // On mobile: set maxWidth small enough that "LET'S BUILD" MUST wrap
+      const maxWidth = isMobile ? (w * 0.4) : (w * 2);
 
       ctx.globalCompositeOperation = 'screen';
       
+      // Render layers
       ctx.fillStyle = '#2b4539'; 
       wrapText(ctx, text, w / 2 - 1.2, h / 2, maxWidth, lineHeight);
       ctx.fillStyle = '#61dca3'; 
